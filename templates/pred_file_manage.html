@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+    <title>基于线性回归的水果光谱分析与新鲜度预测系统</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
+</head>
+<h1>管理测试数据文件</h1>
+<nav>
+        <ul>
+            <li><a href="{{ url_for('upload_file') }}">主页</a></li>
+            <li><a href="{{ url_for('manage_pred_file') }}">管理预测数据</a></li>
+            <li><a href="{{ url_for('manage_train_file') }}">管理训练数据</a></li>
+            <li><a href="{{ url_for('download_report') }}">下载预测结果报告</a></li>
+        </ul>
+</nav>
+<hr>
+
+<!--{% for predtext in files_list %}-->
+<!--    - {{ predtext }}-->
+<!--    <a href="{{ url_for('delete_pred_file', filename=predtext) }}">del</a><br>-->
+<!--{% endfor %}-->
+<p>{{ files_list|length }} Files</p>
+<ul class="file-list">
+{% for predtext in files_list %}
+    <li>
+        {{ predtext }}
+        <a href="{{ url_for('delete_pred_file', filename=predtext) }}" class="delete-btn">删除</a>
+        <a href="{{ url_for('download_pred_file', filename=predtext) }}" class="download-btn">下载</a><br>
+    </li>
+{% endfor %}
+</ul>

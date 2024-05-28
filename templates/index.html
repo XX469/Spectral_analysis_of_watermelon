@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <title>基于线性回归的水果光谱分析与新鲜度预测系统</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
+
+</head>
+<body>
+    <h1>智能化水果光谱分析与新鲜度预测系统</h1>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('upload_file') }}">主页</a></li>
+            <li><a href="{{ url_for('manage_pred_file') }}">管理预测数据</a></li>
+            <li><a href="{{ url_for('manage_train_file') }}">管理训练数据</a></li>
+            <li><a href="{{ url_for('download_report') }}">下载预测结果报告</a></li>
+        </ul>
+    </nav>
+    <hr>
+
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.traintext(class="train-file", multiple="multiple", placeholder="选择训练文件")}}
+        {% for error in form.traintext.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+        {{ form.trainsubmit(class="button") }}
+    </form>
+
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.predtext(class="pred-file", multiple="multiple", placeholder="选择预测文件")}}
+        {% for error in form.predtext.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+        {{ form.predsubmit(class="button") }}
+    </form>
+
+    {% if success %}
+    <br>
+    <p class="success-message">上传成功！</p>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('upload_file') }}">
+        {{ form.run_modelsubmit(class="button3") }}
+    </form>
+</body>
+</html>
